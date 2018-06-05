@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Movie Box</title>
+	<link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/foundation.min.js"></script>
+<!-- 	<script type="text/javascript" src="js/foundation.slider.js"></script> -->
+<!-- 	<script type="text/javascript" src="js/main.js"></script> -->
+	<script type="text/javascript" src="js/scripts.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="exit-x">
+			<span class="x1"></span>
+			<span class="x2"></span>
+		</div>
+		<div class="row search-row line-after align-justify">
+			<div class="columns small-10 medium-10">
+				<input class="search-bar" type="text" name="" placeholder="Search">
+			
+			</div>
+			<div class="columns medium-2">
+				<img class="search-icon" src="images/search-black.png">
+			</div>
+		</div>
+		<div class="row row-slider">
+			<h2 class="columns small-12">Rating</h2>
+			<div class="slider-value small-12 align-justify">
+				<span>0</span>
+				<span>10</span>
+			</div>
+			<span id="testSpan"></span>
+			<div class="columns small-12 align-center">
+				<div class="slider slider1" data-slider data-initial-start="0" data-initial-end="10" data-end="10">
+					<span id="slider-handle1" class="slider-handle" data-slider-handle role="slider" tabindex="1"><span id="sh-num1" class="slider-num"></span></span>
+
+					<span class="slider-fill" data-slider-fill></span>
+					<span id="slider-handle2" class="slider-handle" data-slider-handle role="slider" tabindex="1"><span id="sh-num2" class="slider-num"></span></span>
+					<input type="hidden">
+					<input type="hidden">
+				</div>
+			</div>
+		</div>
+		<div class="row row-slider">
+			<h2 class="columns small-12">Year</h2>
+			<div class="slider-value small-12 align-justify">
+				<span>1888</span>
+				<span>2017</span>
+			</div>
+			<div class="columns small-12">
+				<div class="slider slider2" data-slider data-initial-start="1888" data-initial-end="2017" data-start="1888" data-end="2017">
+					<span id="slider-handle3" class="slider-handle" data-slider-handle role="slider" tabindex="1"><span id="sh-num3" class="slider-num"></span></span>
+					<span class="slider-fill" data-slider-fill></span>
+					<span id="slider-handle4" class="slider-handle" data-slider-handle role="slider" tabindex="1"><span id="sh-num4" class="slider-num"></span></span>
+					<input type="hidden">
+					<input type="hidden">
+				</div>
+			</div>
+		</div>
+		<div id="genre-rows" class="columns align-justify showmore-closed">
+			<div class="row row-genre">
+				<h2 class="columns small-12">Genre</h2>
+				<!-- <div class="columns small-4">
+					<button class="btn-genre">Action</button>
+				</div>
+				<div class="columns small-4">
+					<button class="btn-genre">Adventure</button>
+				</div>
+				<div class="columns small-4">
+					<button class="btn-genre">Animation</button>
+				</div>
+			</div>
+			<div class="row row-genre">
+				<div class="columns small-4">
+					<button class="btn-genre">Biography</button>
+				</div>
+				<div class="columns small-4">
+					<button class="btn-genre">Comedy</button>
+				</div>
+				<div class="columns small-4">
+					<button class="btn-genre">Crime</button> -->
+				</div>
+			</div>
+		
+		
+
+
+		</div>
+		<div class="row row-showmore align-right">
+			<div class="columns small-4">
+				<button id="btn-showmore" class="btn-showmore align-self-right showmore-closed">Show more</button>
+			</div>
+		</div>
+		<div class="row align-center">
+			<div class="columns small-5">
+				<button id="btn-filter-search" class="btn-search">Search</button>
+				
+			</div>
+		</div>
+
+
+		<div id="search-results-div">
+			
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+	</div>
+</body>
+</html>
