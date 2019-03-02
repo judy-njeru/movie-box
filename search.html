@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +13,24 @@
 <!-- 	<script type="text/javascript" src="js/main.js"></script> -->
 	<script type="text/javascript" src="js/scripts.js"></script>
 </head>
-<body>
+<body id="search">
 	<div class="container">
 		<div class="exit-x">
-			<span class="x1"></span>
-			<span class="x2"></span>
-		</div>
+            <a href="javascript:history.go(-1)">
+                <div class="close">
+                    <span class="x1"></span>
+                    <span class="x2"></span>
+                </div>
+            </a>
+
+        </div>
 		<div class="row search-row line-after align-justify">
 			<div class="columns small-10 medium-10">
 				<input class="search-bar" type="text" name="" placeholder="Search">
 			
 			</div>
 			<div class="columns medium-2">
-				<img class="search-icon" src="images/search-black.png">
+                <img alt="search icon" class="search-icon" src="images/search-black.png">
 			</div>
 		</div>
 		<div class="row row-slider">
@@ -108,23 +113,5 @@
 			
 		</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-	</div>
 </body>
 </html>

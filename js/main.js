@@ -1,5 +1,3 @@
-
-
 class MovieAPI {
 
   constructor(APIName){
@@ -60,6 +58,10 @@ class MovieAPI {
         return;
       }
 
+        if (AJAX.status === 429) {
+            clearconsole()
+        }
+
       let results = JSON.parse(AJAX.responseText).results;
         callback(results);
     };
@@ -91,7 +93,7 @@ class MovieAPI {
         callback(trailerResults);
       };
       AJAX.send();
-
+      window.console = {};
   }
 }
 
@@ -104,7 +106,7 @@ let theMovieDBInstance = new MovieAPI('themoviedb');
 
 
 theMovieDBInstance.getPopularMovies(function(results) {
-  console.log(results);
+    // console.log(results);
   let actorNames = [] ;
   let genres = [];
   let genreString = "";
@@ -132,13 +134,13 @@ theMovieDBInstance.getPopularMovies(function(results) {
     },movieId);//close getActorName function
 
     let movieTitle = '<div class="skew slide-single columns small-12 large-5 medium-5">\
-                        <img class="image" id="'+movieId+'"src="'+image_path + image+'"/> <div id="rogue">\
+                        <img class="image" id="' + movieId + '"src="' + image_path + image + '"/> <div class="rogue">\
                         <h2>'+title+'</h2><h3 id="A'+ movieId +'" class="movie-actors"></h3>\
                         <h4>'+genreString+'</h4></div>\
-                        <div id="floating-button">\
+                        <div class="floating-button">\
                           <h2>'+rating+'</h2>\
                         </div>\
-                      </div>'
+                      </div>';
 
     let wrapper = document.getElementById('popularwrapper');
     wrapper.innerHTML += movieTitle;
@@ -170,7 +172,234 @@ theMovieDBInstance.getPopularMovies(function(results) {
     ]
   });
 
+    $(document).on('click', '.skew', function () {
+        const id = $(this).children('.image').attr('id');
+        let AJAX = new XMLHttpRequest();
+        AJAX.open("GET", 'https://api.themoviedb.org/3/movie/' + id + '?api_key=6c6774fdc0da477c7a3f3f7c03048117&language=en-US');
+        AJAX.onreadystatechange = function () {
+            if (AJAX.readyState != 4 || AJAX.status != 200) {
+                return;
+            }
+            let results = JSON.parse(AJAX.responseText);
+            let movieId = results.id;
 
+            const thisMovieActors = actorNames.filter(function (actorName) {
+                return actorName.movieId == results.id;
+            })[0];
+            // console.log(thisMovieActors );
+
+            let actors = '<div class="row ">';
+            let mobileActors = '<div class="row ">';
+
+            thisMovieActors.actors.forEach(function (actor, i) {
+                if (i < 4) {
+                    let actorImage = image_path + actor.profile_path;
+                    actors += `<div class="small-3 columns image-padding-1">
+                        <img src="${actorImage}">
+                        <div class="row labelrow">
+                            <div class="small-12 columns cast-name">${actor.name}</div>
+                        </div>
+                      </div>`;
+
+                    mobileActors += `<div class="small-3 columns image-padding">
+                              <img src="${actorImage}">
+                              <div class="row labelrow">
+                                  <div class="small-12 columns cast-name">${actor.name}</div>
+                              </div>
+                            </div>`;
+                }//end if statement
+            });// end thisMovieActors function
+            actors += '</div>';
+            mobileActors += '</div>';
+
+
+            let title = results.title;
+            let image = results.poster_path;
+            let rating = results.vote_average;
+            let year = results.release_date;
+            let duration = results.runtime;
+            let plot = results.tagline;
+            let storyline = results.overview;
+
+
+            let movieDetails =
+                `<!DOCTYPE html>
+        <html>
+        <head>
+          <title>Movie Info</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,700" rel="stylesheet">
+          <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+          <link rel="stylesheet" type="text/css" href="css/styles.css">
+        </head>
+        <body>
+        <header id="header" class=" zindex movieinfo-header img-bg"><img id ="trailer-image" class="image" src="${image_path + image}" style="background-image"/>
+            <div class="top-bar ">
+                <div class="top-barleft small-1">
+                  <ul class="menu">
+                      <li class="menu-text">
+                        <a href="#">
+                          <img class="header-logo" src="images/Moviebox-logo.png">
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+              <div class="top-barright small-1">
+                  <ul class="menu">
+                      <li>
+                        <img class="search-icon" src="images/search.png">
+                      </li>
+                  </ul>
+              </div>
+            </div><!--close top-bar-->
+            <div class="rating small-3 medium-2 large-4">
+                <p id="rate-number">${rating}</p>
+                <p id="out-of">out of 10</p>
+            </div><!--close rating-->
+        </header>     
+        <div class="skeww"></div>
+
+        
+        <div class="row movie-poster small-5 medium-6 large-6 "><img class="image" src="${image_path + image}"/></div>
+        <div class="mobile-year small-6">
+            <div class="row">
+              <h3 class="column small-6">Year</h3>
+              <h3 class="column small-6">Duration</h3>
+          </div>
+          <div class="row ">
+              <h4 class="column small-6">${year}</h4>
+              <h4 class="column small-6">${duration}</h4>
+          </div>
+        </div><!--close mobile-year-->
+        <div class="info">
+            <div class="wrapper small-6 medium-6 large-6">
+                <div class="row">
+                  <h1 class="font">
+                    <span class="bold">${title}</span>
+                    <span class="bold"></span>
+                  </h1>
+                </div>
+              <div class="row">
+                <h2> ${year}</h2>
+              </div>
+              <div class="row">
+                <h3>
+                  <span class="bold-title">Director:</span>
+                  <span class="regular-name">Gareth Edwards</span>
+                </h3>
+              </div>
+              <div class="row writers">
+                <h3>
+                  <span class="bold-title">Writers:</span>
+                  <span class="regular-name">Chris Weitz and Tony Gilroy</span>
+                </h3>
+              </div>
+            </div><!--wrapper-->
+        </div><!--close info-->
+        <div class="more-info-wrapper">
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Duration: </span><span class="regular-font">${duration}</span></h3>
+            </div>
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Genre: </span><span class="regular-font">${genreString}</span></h3>
+            </div>
+        </div><!--close more-info-wrapper-->
+        <!---
+        class mobile-storyline  and mobile-main-cast is only displayed in mobile devices
+        -->
+        <div class="mobile-storyline">
+          <div class="row">
+              <h3 class="column small-6">Storyline</h3>
+          </div>
+          <div class="row">
+              <div class="column small-12"">
+                  <div class="mobile-storyline-info">${storyline}</div> 
+              </div>
+          </div>
+        </div><!--close mobile-storyline-->
+        <div class="mobile-main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${mobileActors}
+          
+        </div> <!--close mobile-main-cast-->
+        <div class="movie-summary">
+          <div class="row">
+              <h3 class="column small-6">Stills</h3>
+              <h3 class="column small-6 plot-heading">Plot</h3>
+          </div>
+          <div class="row">
+              <div class="small-12 medium-6 large-6 columns movie-stills">
+                  <img class="small-6 columns" src="${image_path + image}">
+                  <img class="small-6 columns" src="${image_path + image}">
+              </div>
+              <div class="small-12 medium-6 large-6 columns">
+                  <div class="plot">${plot}</div> 
+                  <h3 class="storyline">Storyline</h3>
+              </div>
+          </div>
+        </div><!--close movie-summary-->
+        <div class="movie-summary-2">
+          <div class="row">
+              <div class="small-6 columns movie-stills-2">
+                  <img class="small-3 columns" src="${image_path + image}">
+                  <img class="small-3 columns" src="${image_path + image}">
+              </div>
+              <div class="small-6 columns">
+                  <div class="storyline-info">
+                  ${storyline}
+                  </div>   
+              </div>
+          </div>
+        </div><!--close movie-summary-2-->
+        <div class="main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${actors}
+        </div><!--close main-cast-->
+          <div id="myId">
+            
+          </div>
+          </div>
+        <footer>
+          <div class="row align-center">
+            <img class="footer-logo" src="images/Moviebox-logo.png">
+          </div>
+          <div class="row align-center">
+            <div class="columns large-2 medium-2 small-12">
+              <h4>About</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Term of Use</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>FAQ</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Privacy</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Contact Us</h4> 
+            </div>
+          </div>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        </footer>
+        </body>
+        </html>`;
+
+            document.body.innerHTML = movieDetails;
+            document.getElementById("header").style.backgroundImage = "url('" + image_path + image + "')";
+
+        };//close AJAX function
+        AJAX.send();
+    })
+});
+/*
 
 // RENDER ABOUT-MOVIE PAGE
   $('.image').click(function() {
@@ -182,11 +411,12 @@ theMovieDBInstance.getPopularMovies(function(results) {
       }
       let results = JSON.parse(AJAX.responseText);
       let movieId = results.id;
+      console.log(movieId)
 
       const thisMovieActors = actorNames.filter(function(actorName){
         return actorName.movieId == results.id;
       })[0];
-        console.log(thisMovieActors );
+        // console.log(thisMovieActors );
 
       let actors = '<div class="row ">';
       let mobileActors = '<div class="row ">';
@@ -399,6 +629,7 @@ theMovieDBInstance.getPopularMovies(function(results) {
     });//close .image function
 });
  // close popular movies function
+*/
 
 
 
@@ -429,7 +660,7 @@ theMovieDBInstance.getRecentMovies(function(results) {
       let movieId = results[i].id;
 
       theMovieDBInstance.getActorName(function(actorResults) {
-        console.log(actorResults);
+          // console.log(actorResults);
         actorNames.push({actors:actorResults, movieId: movieId});
     
         for(let i=0; i<3; i++){
@@ -439,13 +670,13 @@ theMovieDBInstance.getRecentMovies(function(results) {
       },movieId);//close getActorName function
        
       let movieTitle = '<div class="skew slide-single columns small-12 large-5 medium-5">\
-                          <img class="image" id="'+movieId+'"src="'+image_path + image+'"/> <div id="rogue">\
+                          <img class="image" id="' + movieId + '"src="' + image_path + image + '"/> <div class="rogue">\
                           <h2>'+title+'</h2><h3 id="B'+ movieId +'" class="movie-actors"></h3>\
                           <h4>'+genreString+'</h4></div>\
-                          <div id="floating-button">\
+                          <div class="floating-button">\
                             <h2>'+rating+'</h2>\
                           </div>\
-                        </div>'
+                        </div>';
 
       let wrapper = document.getElementById('recentmovieswrapper');
       wrapper.innerHTML += movieTitle;
@@ -490,7 +721,7 @@ theMovieDBInstance.getRecentMovies(function(results) {
       const thisMovieActors = actorNames.filter(function(actorName){
         return actorName.movieId == results.id;
       })[0];
-        console.log(thisMovieActors );
+        // console.log(thisMovieActors );
 
       let actors = '<div class="row ">';
       let mobileActors = '<div class="row ">';
@@ -513,8 +744,8 @@ theMovieDBInstance.getRecentMovies(function(results) {
                             </div>` ;
         }//end if statement
       });// end thisMovieActors function
-          actors += '</div>'
-          mobileActors += '</div>'
+        actors += '</div>';
+        mobileActors += '</div>';
 
        
       let title = results.title;
@@ -558,13 +789,14 @@ theMovieDBInstance.getRecentMovies(function(results) {
                   </ul>
               </div>
             </div><!--close top-bar-->
+            <div class="rating small-3 medium-2 large-4">
+                <p id="rate-number">${rating}</p>
+                <p id="out-of">out of 10</p>
+            </div><!--close rating-->
         </header>     
         <div class="skeww"></div>
 
-        <div class="rating small-3 medium-2 large-4">
-          <p id="rate-number">${rating}</p>
-            <p id="out-of">out of 10</p>
-        </div><!--close rating-->
+        
         <div class="row movie-poster small-5 medium-6 large-6 "><img class="image" src="${image_path + image}"/></div>
         <div class="mobile-year small-6">
             <div class="row">
@@ -692,7 +924,7 @@ theMovieDBInstance.getRecentMovies(function(results) {
         <script type="text/javascript" src="js/main.js"></script>
         </footer>
         </body>
-        </html>`
+        </html>`;
 
         document.body.innerHTML = movieDetails;
         document.getElementById("header").style.backgroundImage="url('"+image_path + image +"')";
@@ -706,7 +938,7 @@ theMovieDBInstance.getRecentMovies(function(results) {
 
 //RENDER COMEDY MOVIES
 theMovieDBInstance.getComedyMovies(function(results) {
-    console.log(results);
+    // console.log(results);
     let actorNames = [] ;
     let genres = [];
     let genreString = "";
@@ -727,7 +959,7 @@ theMovieDBInstance.getComedyMovies(function(results) {
       let movieId = results[i].id;
 
       theMovieDBInstance.getActorName(function(actorResults) {
-        console.log(actorResults);
+          // console.log(actorResults);
         actorNames.push({actors:actorResults, movieId: movieId});
     
         for(let i=0; i<3; i++){
@@ -738,13 +970,13 @@ theMovieDBInstance.getComedyMovies(function(results) {
        
 
         let movieTitle = '<div class="skew slide-single columns small-12 large-5 medium-5">\
-                          <img class="image" id="'+movieId+'"src="'+image_path + image+'"/> <div id="rogue">\
+                          <img class="image" id="' + movieId + '"src="' + image_path + image + '"/> <div class="rogue">\
                           <h2>'+title+'</h2><h3 id="C'+ movieId +'" class="movie-actors"></h3>\
                           <h4>'+genreString+'</h4></div>\
-                          <div id="floating-button">\
+                          <div class="floating-button">\
                             <h2>'+rating+'</h2>\
                           </div>\
-                        </div>'
+                        </div>';
 
 
       let wrapper = document.getElementById('comedywrapper');
@@ -791,11 +1023,11 @@ theMovieDBInstance.getComedyMovies(function(results) {
       const thisMovieActors = actorNames.filter(function(actorName){
         return actorName.movieId == results.id;
       })[0];
-        console.log(thisMovieActors );
+        // console.log(thisMovieActors );
 
       let actors = '<div class="row ">';
       let mobileActors = '<div class="row ">';
-      
+
       thisMovieActors.actors.forEach(function(actor, i){
         if( i < 4){
           let actorImage = image_path + actor.profile_path;
@@ -814,10 +1046,10 @@ theMovieDBInstance.getComedyMovies(function(results) {
                             </div>` ;
         }//end if statement
       });// end thisMovieActors function
-          actors += '</div>'
-          mobileActors += '</div>'
+        actors += '</div>';
+        mobileActors += '</div>';
 
-       
+
       let title = results.title;
       let image = results.poster_path;
       let rating = results.vote_average;
@@ -825,9 +1057,9 @@ theMovieDBInstance.getComedyMovies(function(results) {
       let duration = results.runtime;
       let plot = results.tagline;
       let storyline = results.overview;
-       
 
-      let movieDetails = 
+
+        let movieDetails =
         `<!DOCTYPE html>
         <html>
         <head>
@@ -859,13 +1091,13 @@ theMovieDBInstance.getComedyMovies(function(results) {
                   </ul>
               </div>
             </div><!--close top-bar-->
+            <div class="rating small-3 medium-2 large-4">
+                <p id="rate-number">${rating}</p>
+                <p id="out-of">out of 10</p>
+            </div><!--close rating-->
         </header>     
         <div class="skeww"></div>
 
-        <div class="rating small-3 medium-2 large-4">
-          <p id="rate-number">${rating}</p>
-            <p id="out-of">out of 10</p>
-        </div><!--close rating-->
         <div class="row movie-poster small-5 medium-6 large-6 "><img class="image" src="${image_path + image}"/></div>
         <div class="mobile-year small-6">
             <div class="row">
@@ -993,7 +1225,7 @@ theMovieDBInstance.getComedyMovies(function(results) {
         <script type="text/javascript" src="js/main.js"></script>
         </footer>
         </body>
-        </html>`
+        </html>`;
 
         document.body.innerHTML = movieDetails;
         document.getElementById("header").style.backgroundImage="url('"+image_path + image +"')";

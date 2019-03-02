@@ -13,13 +13,13 @@ let showHandleValue = function(handleValue, slider, span) {
         }
         if (handleValue === $(slider).attr('data-initial-end')) {
             $(span).fadeOut();
-            return;
+
         }
         else {
             $(span).fadeIn();
-            return;
+
         }
-    }
+};
 // display search results
 class SearchResult {
     constructor(image, name, tags, text) {
@@ -63,7 +63,7 @@ $(document).ready(function() {
             let response = JSON.parse(r.responseText);
             console.log(response);
             for (let i = 0; i < response.results.length; i++) {
-                console.log(response.results[i].name)
+                console.log(response.results[i].name);
                 let imageURL = "http://image.tmdb.org/t/p/w185/" + response.results[i].profile_path;
                 if (response.results[i].profile_path == null) {
                     imageURL = "images/noImage.jpg"
@@ -73,9 +73,9 @@ $(document).ready(function() {
                 let newResultsCard = new SearchResult(imageURL, response.results[i].name, "Actor | Writer | Producer", "Paul Stephen Rudd was born in Passaic, New Jersey. His parents, Michael and Gloria, both from Jewish families...");
             
                 newResultsCard.createCard();
-    
-            
-            };
+
+
+            }
         };
         r.send();
     });
@@ -112,7 +112,7 @@ $(document).ready(function() {
     // make sliders scalable
     $(window).on('resize', function() {
         $('.slider1, .slider2').foundation('_reflow');
-    })
+    });
     // dots on sliders
     let svgDot = "<svg width='13px' height='13px' viewBox='0 0 13 13' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='dot' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Page-1' fill-rule='nonzero' fill='#e6e6e6'><circle id='Oval' cx='6.5' cy='6.5' r='6.5'></circle></g></g></svg>";
     let lineDots = "";
@@ -132,14 +132,14 @@ $(document).ready( function() {
             console.log("opna");
             $("#genre-rows .row-genre").show();
             $("#btn-showmore").html("Show less");
-        };
+        }
         if ($("#btn-showmore").hasClass("showmore-open")) {
             
             console.log("loka");
             $("#genre-rows .row-genre").hide();
             $("#genre-rows .row-genre:nth-child(-n + 3)").show();
             $("#btn-showmore").html("Show more");
-        };
+        }
         $("#btn-showmore").toggleClass("showmore-closed showmore-open");
     
     });
@@ -186,7 +186,6 @@ $(document).ready( function() {
                     console.log($(this).data("id"));
                 }
                 $(this).toggleClass("btn-genre-fill");
-                filterSearchInfo.genres.push(selectedGenres);
             
         });
                 
@@ -239,7 +238,7 @@ $(document).ready(function(){
             r.onreadystatechange = function () {
                 if (r.readyState != 4 || r.status != 200) return;
                 let response = JSON.parse(r.responseText);
-                console.log(response.original_title)
+                console.log(response.original_title);
                 for (let j = 0; j < response.genres.length; j++) {
                     
                     console.log(response.genres[j].id)
@@ -252,7 +251,7 @@ $(document).ready(function(){
     });
 });
 let filterSearch = function() {
-}
+};
 // {
 //  "adult":false,
 //  "backdrop_path":"/6xKCYgH16UuwEGAyroLU6p8HLIn.jpg",
@@ -270,3 +269,4 @@ let filterSearch = function() {
 //  "id":238,"imdb_id":"tt0068646",
 //  "original_language":"en",
 //  "original
+

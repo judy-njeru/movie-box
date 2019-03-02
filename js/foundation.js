@@ -67,7 +67,7 @@
 
       this._uuids.push(plugin.uuid);
 
-      return;
+
     },
     /**
      * @function
@@ -90,7 +90,7 @@
       for (var prop in plugin) {
         plugin[prop] = null; //clean up script to prep for garbage collection.
       }
-      return;
+
     },
 
     /**
@@ -194,7 +194,7 @@
           } catch (er) {
             console.error(er);
           } finally {
-            return;
+
           }
         });
       });
@@ -669,8 +669,7 @@
     }
 
     return allDirs.indexOf(false) === -1;
-  };
-
+  }
   /**
    * Uses native methods to return an object of dimension values.
    * @function
@@ -1737,7 +1736,7 @@
         }
       });
 
-      return;
+
     },
     Burn: function (menu, type) {
       var //items = menu.find('li'),
@@ -2826,7 +2825,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             if ($(this).is($element)) {
               $prevElement = $elements.eq(Math.max(0, i - 1));
               $nextElement = $elements.eq(Math.min(i + 1, $elements.length - 1));
-              return;
+
             }
           });
 
@@ -3053,7 +3052,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if ($link.data('savedHref')) {
             $link.attr('href', $link.data('savedHref')).removeData('savedHref');
           } else {
-            return;
+
           }
         });
         Foundation.unregisterPlugin(this);
@@ -3281,7 +3280,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 $nextElement = $element.parents('li').first().next('li').find('a').first();
               }
 
-              return;
+
             }
           });
 
@@ -3558,7 +3557,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (hasSub) {
             if (hasClicked) {
               if (!_this.options.closeOnClick || !_this.options.clickOpen && !hasTouch || _this.options.forceFollow && hasTouch) {
-                return;
+
               } else {
                 e.stopImmediatePropagation();
                 e.preventDefault();
@@ -3625,7 +3624,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             if ($(this).is($element)) {
               $prevElement = $elements.eq(i - 1);
               $nextElement = $elements.eq(i + 1);
-              return;
+
             }
           });
 
@@ -3646,7 +3645,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               $element.find('li > a:first').focus();
               e.preventDefault();
             } else {
-              return;
+
             }
           },
               closeSub = function () {
@@ -5695,7 +5694,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 $prevElement = $elements.eq(Math.max(0, i - 1));
                 $nextElement = $elements.eq(Math.min(i + 1, $elements.length - 1));
               }
-              return;
+
             }
           });
 
@@ -6639,8 +6638,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       this.currentPlugin = null;
       if (!this.$element.attr('id')) {
         this.$element.attr('id', Foundation.GetYoDigits(6, 'responsiveaccordiontabs'));
-      };
-
+      }
       this._init();
       this._events();
 
@@ -6775,8 +6773,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         if ($panels.length) fromString = 'tabs';
         if (fromString === toSet) {
           return;
-        };
-
+        }
         var tabsTitle = _this.allOptions.linkClass ? _this.allOptions.linkClass : 'tabs-title';
         var tabsPanel = _this.allOptions.panelClass ? _this.allOptions.panelClass : 'tabs-panel';
 
@@ -6789,8 +6786,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           $panels.children('a').removeAttr('role').removeAttr('aria-controls').removeAttr('aria-selected');
         } else {
           $panels = $liHeads.children('[data-tab-content]').removeClass('accordion-content');
-        };
-
+        }
         $panels.css({ display: '', visibility: '' });
         $liHeads.css({ display: '', visibility: '' });
         if (toSet === 'accordion') {
@@ -6808,7 +6804,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             $placeholder.remove();
           } else {
             $tabsContent = $('<div class="tabs-content"></div>').insertAfter(_this.$element).attr('data-tabs-content', _this.$element.attr('id'));
-          };
+          }
           $panels.each(function (key, value) {
             var tempValue = $(value).appendTo($tabsContent).addClass(tabsPanel);
             var hash = $liHeadsA.get(key).hash.slice(1);
@@ -6820,15 +6816,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 hash = id;
                 $(value).attr('id', hash);
                 $($liHeadsA.get(key)).attr('href', $($liHeadsA.get(key)).attr('href').replace('#', '') + '#' + hash);
-              };
-            };
+              }
+            }
             var isActive = $($liHeads.get(key)).hasClass('is-active');
             if (isActive) {
               tempValue.addClass('is-active');
-            };
+            }
           });
           $liHeads.addClass(tabsTitle);
-        };
+        }
       }
 
       /**
@@ -8000,7 +7996,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         this.points = breaks;
-        return;
+
       }
 
       /**
@@ -9425,8 +9421,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               valid = true;
             }
           });
-        };
-
+        }
         return valid;
       }
 
@@ -9768,7 +9763,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }, {
       key: '_killswitch',
       value: function _killswitch() {
-        return;
+
       }
 
       /**

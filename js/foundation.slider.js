@@ -1,4 +1,4 @@
-(function ($, window, document, undefined) {
+(function ($, window) {
   'use strict';
 
   Foundation.libs.slider = {
@@ -71,12 +71,12 @@
           }
           self.remove_active_slider();
         })
-        .on('change.fndtn.slider', function (e) {
+          .on('change.fndtn.slider', function () {
           self.settings.on_change();
         });
 
       self.S(window)
-        .on('resize.fndtn.slider', self.throttle(function (e) {
+          .on('resize.fndtn.slider', self.throttle(function () {
           self.reflow();
         }, 300));
 
