@@ -1,1 +1,1 @@
-# v2017verkefnalota1
+#Vefskolinn 2017 project
